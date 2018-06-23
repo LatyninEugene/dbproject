@@ -1,0 +1,3 @@
+view\ExampleCDI.class
+control\ExampleBean.class
+control\JDBCUtil.class
