@@ -1,0 +1,6 @@
+control\JDBCUtil.class
+control\EntryBean.class
+control\UserType.class
+view\IndexServlet.class
+view\LoginServlet.class
+view\UserCDI.class
