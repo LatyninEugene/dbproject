@@ -2344,7 +2344,6 @@
     <role id="753" parent="1" name="azjoyeduccysmc">
       <ObjectId>1096635</ObjectId>
       <Inherit>1</Inherit>
-      <CanLogin>1</CanLogin>
       <ConnectionLimit>20</ConnectionLimit>
     </role>
     <role id="754" parent="1" name="azlnrynlashuxq">
@@ -2513,7 +2512,6 @@
     <role id="783" parent="1" name="bzltafryrcqedm">
       <ObjectId>1126910</ObjectId>
       <Inherit>1</Inherit>
-      <CanLogin>1</CanLogin>
       <ConnectionLimit>20</ConnectionLimit>
     </role>
     <role id="784" parent="1" name="bzodvpvnddlqyy">
@@ -6238,9 +6236,129 @@
     <schema id="1460" parent="571" name="public">
       <ObjectId>2200</ObjectId>
       <Comment>standard public schema</Comment>
-      <IntrospectionTimestamp>2018-06-23.12:57:06.817</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2018-06-24.13:12:28.401</IntrospectionTimestamp>
+      <IntrospectionStateNumber>2088880</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
+    <sequence id="1461" parent="1460" name="users_id_seq">
+      <ObjectId>1384881</ObjectId>
+      <StateNumber>2088880</StateNumber>
+      <SequenceIdentity>1..2147483647</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+      <DataType>integer</DataType>
+    </sequence>
+    <sequence id="1462" parent="1460" name="transport_id_seq">
+      <ObjectId>1372426</ObjectId>
+      <StateNumber>2060249</StateNumber>
+      <SequenceIdentity>1..2147483647</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+      <DataType>integer</DataType>
+    </sequence>
+    <object-type id="1463" parent="1460" name="type_of_access">
+      <ObjectId>1384800</ObjectId>
+      <StateNumber>2085614</StateNumber>
+      <SubKind>enum</SubKind>
+      <SubCategory>enum</SubCategory>
+      <Labels>admin
+user</Labels>
+    </object-type>
+    <table id="1464" parent="1460" name="transport">
+      <ObjectId>1372428</ObjectId>
+      <StateNumber>2060249</StateNumber>
+    </table>
+    <table id="1465" parent="1460" name="users">
+      <ObjectId>1384883</ObjectId>
+      <StateNumber>2088880</StateNumber>
+    </table>
+    <column id="1466" parent="1464" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>2060249</StateNumber>
+      <DefaultExpression>nextval(&apos;transport_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>transport_id_seq</SequenceName>
+    </column>
+    <column id="1467" parent="1464" name="number">
+      <Position>2</Position>
+      <DataType>varchar(10)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>2060295</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="1468" parent="1464" name="transport_pkey">
+      <ObjectId>1372432</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="1469" parent="1464" name="transport_numbber_key">
+      <ObjectId>1372434</ObjectId>
+      <ColNames>number</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="1470" parent="1464" name="transport_pkey">
+      <ObjectId>1372433</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>transport_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="1471" parent="1464" name="transport_numbber_key">
+      <ObjectId>1372435</ObjectId>
+      <ColNames>number</ColNames>
+      <UnderlyingIndexName>transport_numbber_key</UnderlyingIndexName>
+    </key>
+    <column id="1472" parent="1465" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>2088880</StateNumber>
+      <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>users_id_seq</SequenceName>
+    </column>
+    <column id="1473" parent="1465" name="login">
+      <Position>2</Position>
+      <DataType>varchar(18)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>2088880</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="1474" parent="1465" name="password">
+      <Position>3</Position>
+      <DataType>varchar(18)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>2088880</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="1475" parent="1465" name="type">
+      <Position>4</Position>
+      <DataType>type_of_access|0s</DataType>
+      <StateNumber>2088880</StateNumber>
+      <TypeId>1384800</TypeId>
+    </column>
+    <index id="1476" parent="1465" name="users_pkey">
+      <ObjectId>1384887</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="1477" parent="1465" name="users_login_key">
+      <ObjectId>1384889</ObjectId>
+      <ColNames>login</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="1478" parent="1465" name="users_pkey">
+      <ObjectId>1384888</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="1479" parent="1465" name="users_login_key">
+      <ObjectId>1384890</ObjectId>
+      <ColNames>login</ColNames>
+      <UnderlyingIndexName>users_login_key</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>

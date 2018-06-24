@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class JDBCUtil {
 
-    private static final String URL = "jdbc:postgresql://ec2-54-247-117-145.eu-west-1.compute.amazonaws.com:5432/ddbvlt6treu35e";
+    private static final String URL = "jdbc:postgresql://ec2-54-247-117-145.eu-west-1.compute.amazonaws.com:5432/ddbvlt6treu35e?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
     private static final String USER = "sapfwipdxbakhf";
     private static final String PASSWORD = "5ee6ce59fcd1ea10672183dd1c2f9a5c268380a26f637cb25a6e482198febba6";
 
