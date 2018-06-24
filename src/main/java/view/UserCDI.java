@@ -2,10 +2,7 @@ package view;
 
 import control.EntryBean;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.ExternalContextFactory;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.IOException;
@@ -34,8 +31,9 @@ public class UserCDI implements Serializable {
         this.password = password;
     }
 
-    @EJB
-    private EntryBean eb;
+
+    private EntryBean eb = new EntryBean();
+
     public void createUser(){
         if(!checkUser()){
             if(eb.addUser(login,password)) {
