@@ -3,12 +3,13 @@ package control;
 import domain.User;
 
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 @Stateful
 public class UsersBean {
@@ -18,7 +19,7 @@ public class UsersBean {
         updateUsersList();
     }
 
-    public ArrayList<User> getUsers() {
+    public static ArrayList<User> getUsers() {
         return users;
     }
 
@@ -43,6 +44,36 @@ public class UsersBean {
         } catch (ClassNotFoundException e) {
             return false;
         }
+        Collections.sort(users,(o1,o2)->o1.getId() < o2.getId()? -1:1);
         return true;
+    }
+
+    public static boolean typeChange(User user){
+        int idInTable = find(user);
+        try(Connection con = JDBCUtil.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE users SET type = ?::type_of_access where login = ?");
+            ps.setString(2,user.getLogin());
+            if (user.getType().equals(UserType.user)) {
+                ps.setString(1, UserType.admin.toString());
+                user.setType(UserType.admin);
+            }
+            else{
+                ps.setString(1,UserType.user.toString());
+                user.setType(UserType.user);
+            }
+            ps.executeUpdate();
+            users.set(idInTable, user);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
+    private static int find(User user){
+        for(int x = 0; x<users.size(); x++){
+            if(users.get(x).getId() == user.getId())
+                return x;
+        }
+        return -1;
     }
 }

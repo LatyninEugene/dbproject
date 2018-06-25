@@ -1,6 +1,7 @@
 package view;
 
 import control.EntryBean;
+import control.UserType;
 import control.UsersBean;
 import domain.User;
 
@@ -17,11 +18,18 @@ public class UserCDI implements Serializable {
 
     private String login;
     private String password;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getLogin() {
         return login;
     }
-
     public void setLogin(String login) {
         this.login = login;
     }
@@ -29,48 +37,56 @@ public class UserCDI implements Serializable {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
 
     private EntryBean eb = new EntryBean();
-    private UsersBean ub = new UsersBean();
 
     public String createUser(){
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+        //String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
         if(!checkUser()){
             if(eb.addUser(login,password)) {
-                return(path+"/index.jsf");
+                user = eb.getUser(login);
+                return("/index.jsf");
             }
         }
-        return (path+"/login");
+        return ("/login");
     }
     public boolean checkUser(){
        return eb.checkUser(login,password);
     }
     public String loginUser(){
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
         if(checkUser()){
-            return (path+"/index.jsf");
+            user = eb.getUser(login);
+            return ("/index.jsf");
         }
-        return (path+"/login");
+        return ("/login");
     }
 
     public String exit(){
+        user = null;
         login = null;
         password = null;
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-        return (path+"/login");
+        return ("/login");
+    }
+
+    public String goUsers(){
+       return user.getType().equals(UserType.user)? "/users.jsf" : "/usersforadmin.jsf";
     }
 
     public List<User> getUsers(){
-        return ub.getUsers();
+        return UsersBean.getUsers();
     }
 
     public String updateUsersList(){
         UsersBean.updateUsersList();
-        return "/users.jsf";
+        return goUsers();
+    }
+    public String typeChange(User user){
+        UsersBean.typeChange(user);
+        this.user.setType(user.getType());
+        return goUsers();
     }
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:form>
+        Вы вошли как <h:outputLabel value="#{userCDI.login}"/>
+        <h:commandButton value="Выйти" action="#{userCDI.exit()}"/>
+        <h:commandButton value="Назад" action="index"/>
+        <h:commandButton value="Обнавить список" action="#{userCDI.updateUsersList()}"/>
+    </h:form>
+</f:view>
+<h:body>
+    <h:dataTable value="#{userCDI.users}" var="user">
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="ID" />
+            </f:facet>
+            <h:outputText value="#{user.id}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Логин" />
+            </f:facet>
+            <h:outputText value="#{user.login}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Тип доступа" />
+            </f:facet>
+            <h:outputText value="#{user.type}" />
+            <h:form>
+                <h:commandButton value="изменить" action="#{userCDI.typeChange(user)}"/>
+            </h:form>
+        </h:column>
+    </h:dataTable>
+</h:body>
+</html>
