@@ -6,9 +6,7 @@ import control.UsersBean;
 import domain.User;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -86,7 +84,6 @@ public class UserCDI implements Serializable {
     }
     public String typeChange(User user){
         UsersBean.typeChange(user);
-        this.user.setType(user.getType());
         return goUsers();
     }
 }
