@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <ui:include src="WEB-INF/headerwithback.xhtml"/>
+    <h:form>
+        <h:commandButton value="Обнавить список" action="#{transportCDI.updateTransportList()}"/>
+    </h:form>
+
+</f:view>
+<h:body>
+    <h:outputText value="отсортировать по "/>
+    <h:form>
+        <h:commandButton value="id" action="#{transportCDI.sortByID}" />
+        <h:commandButton value="грузоподъемности" action="#{transportCDI.sortByTonnage()}"/>
+    </h:form>
+    <h:dataTable value="#{transportCDI.transports}" var="transport">
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="ID" />
+            </f:facet>
+            <h:outputText value="#{transport.id}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Номер" />
+            </f:facet>
+            <h:outputText value="#{transport.nummber}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Грузоподъемность (кг)" />
+            </f:facet>
+            <h:outputText value="#{transport.tonnage}" />
+        </h:column>
+    </h:dataTable>
+</h:body>
+</html>

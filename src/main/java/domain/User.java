@@ -1,7 +1,5 @@
 package domain;
 
-import control.UserType;
-
 public class User {
     private int id;
     private String login;

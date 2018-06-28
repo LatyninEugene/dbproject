@@ -1,6 +1,6 @@
 package control;
 
-import domain.User;
+import domain.UserType;
 
 import javax.ejb.Stateless;
 import java.sql.*;
@@ -16,8 +16,7 @@ public class EntryBean {
             if (resultSet.next()){
                 return true;
             }
-        } catch (SQLException e) {
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
         }
         return false;
     }
@@ -29,27 +28,9 @@ public class EntryBean {
             ps.setString(2,password);
             ps.setString(3,UserType.user.toString());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            return false;
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             return false;
         }
         return true;
-    }
-    public User getUser(String login){
-        User user = new User();
-        try(Connection con = JDBCUtil.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE login = ?;");
-            ps.setString(1, login);
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                user.setId(resultSet.getInt(1));
-                user.setLogin(resultSet.getString(2));
-                user.setType(UserType.valueOf(resultSet.getString(4)));
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-           return null;
-        }
-        return user;
     }
 }

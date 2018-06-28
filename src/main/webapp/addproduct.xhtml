@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <ui:include src="WEB-INF/header.xhtml"/>
+</f:view>
+<h:body>
+    <h:form>
+        <tr><td>Название продукта</td><td><h:inputText value="#{productsCDI.title}"/></td></tr>
+        <tr>
+            <td>Тип продукта</td>
+            <td><h:selectOneMenu id="productype" value="#{productsCDI.type}">
+                    <f:selectItem id="p1" itemLabel="Фрукт" itemValue="fruit"/>
+                    <f:selectItem id="p2" itemLabel="Овощ" itemValue="vegetable"/>
+                </h:selectOneMenu></td></tr>
+        <tr><td><h:commandButton value="Добавить" action="#{productsCDI.addProduct()}"/></td></tr>
+    </h:form>
+</h:body>
+</html>

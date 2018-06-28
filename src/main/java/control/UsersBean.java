@@ -1,6 +1,7 @@
 package control;
 
 import domain.User;
+import domain.UserType;
 
 import javax.ejb.Stateful;
 import java.sql.Connection;
@@ -9,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 @Stateful
 public class UsersBean {
@@ -22,11 +22,26 @@ public class UsersBean {
     public static ArrayList<User> getUsers() {
         return users;
     }
-
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
+    public static User getUser(String login){
+        User user = new User();
+        try(Connection con = JDBCUtil.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE login = ?;");
+            ps.setString(1, login);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                user.setId(resultSet.getInt(1));
+                user.setLogin(resultSet.getString(2));
+                user.setType(UserType.valueOf(resultSet.getString(4)));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            return null;
+        }
+        return user;
+    }
     public static boolean updateUsersList(){
         users = new ArrayList<>();
         try(Connection con = JDBCUtil.getConnection()) {
@@ -39,9 +54,7 @@ public class UsersBean {
                 user.setType(UserType.valueOf(resultSet.getString(4)));
                 users.add(user);
             }
-        } catch (SQLException e) {
-            return false;
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             return false;
         }
         Collections.sort(users,(o1,o2)->o1.getId() < o2.getId()? -1:1);
@@ -51,8 +64,8 @@ public class UsersBean {
     public static boolean typeChange(User user){
         int idInTable = find(user);
         try(Connection con = JDBCUtil.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE users SET type = ?::type_of_access where login = ?");
-            ps.setString(2,user.getLogin());
+            PreparedStatement ps = con.prepareStatement("UPDATE users SET type = ?::type_of_access WHERE id = ?");
+            ps.setInt(2,user.getId());
             if (user.getType().equals(UserType.user)) {
                 ps.setString(1, UserType.admin.toString());
                 user.setType(UserType.admin);
@@ -75,5 +88,18 @@ public class UsersBean {
                 return x;
         }
         return -1;
+    }
+
+    public static UserType findType(User user){
+        try(Connection con = JDBCUtil.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE id = ?");
+            ps.setInt(1,user.getId());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return UserType.valueOf(rs.getString(4));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+        }
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package control;
+package domain;
 
 public enum UserType {
     admin,

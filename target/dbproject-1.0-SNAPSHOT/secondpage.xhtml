@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <ui:include src="WEB-INF/headerwithback.xhtml"/>
+</f:view>
+<h:body>
+    <h:form>
+        <ul>
+            <li>
+                <h:commandLink value="Транспорт" action="#{userCDI.redirect('/transport.jsf')}" />
+            </li>
+            <li>
+                <h:commandLink value="На складе" action="#{userCDI.redirect('/storage.jsf')}" />
+            </li>
+            <li>
+                <h:commandLink value="Списки" action="#{userCDI.redirect('/listproducts.jsf')}" />
+            </li>
+            <li>
+                <h:commandLink value="Добавить" action="#{userCDI.redirect('/add')}" />
+            </li>
+            <li>
+                <h:commandLink value="Отнять" action="#{userCDI.redirect('/remove')}" />
+            </li>
+        </ul>
+    </h:form>
+</h:body>
+</html>

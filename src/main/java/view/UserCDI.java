@@ -1,12 +1,16 @@
 package view;
 
 import control.EntryBean;
-import control.UserType;
 import control.UsersBean;
 import domain.User;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,7 +30,10 @@ public class UserCDI implements Serializable {
     }
 
     public String getLogin() {
-        return login;
+        if (user==null){
+            return login;
+        }
+        return login+" ("+UsersBean.findType(user).toString()+")";
     }
     public void setLogin(String login) {
         this.login = login;
@@ -39,6 +46,12 @@ public class UserCDI implements Serializable {
         this.password = password;
     }
 
+    public boolean checkSessionUser(HttpSession session){
+        if(session.getAttribute("user")!=null){
+            return true;
+        }
+        return false;
+    }
 
     private EntryBean eb = new EntryBean();
 
@@ -46,44 +59,59 @@ public class UserCDI implements Serializable {
         //String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
         if(!checkUser()){
             if(eb.addUser(login,password)) {
-                user = eb.getUser(login);
-                return("/index.jsf");
+                setSession();
             }
         }
-        return ("/login");
+        return "failure";
+    }
+    private void setSession(){
+        user = UsersBean.getUser(login);
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        request.getSession().setAttribute("user",login);
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+        try {
+            response.sendRedirect("/index");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public boolean checkUser(){
        return eb.checkUser(login,password);
     }
     public String loginUser(){
         if(checkUser()){
-            user = eb.getUser(login);
-            return ("/index.jsf");
+            setSession();
         }
-        return ("/login");
+        return "failure";
     }
 
-    public String exit(){
-        user = null;
+    public void exit(){
         login = null;
         password = null;
-        return ("/login");
-    }
-
-    public String goUsers(){
-       return user.getType().equals(UserType.user)? "/users.jsf" : "/usersforadmin.jsf";
+        user = null;
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        request.getSession().setAttribute("user",null);
+        redirect("/login");
     }
 
     public List<User> getUsers(){
         return UsersBean.getUsers();
     }
-
-    public String updateUsersList(){
+    public void updateUsersList(){
         UsersBean.updateUsersList();
-        return goUsers();
+        redirect("/users");
     }
-    public String typeChange(User user){
+    public void typeChange(User user){
         UsersBean.typeChange(user);
-        return goUsers();
+        redirect("/users");
+    }
+    public static void redirect(String s){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

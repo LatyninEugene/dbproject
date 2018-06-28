@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<f:view>
+    <ui:include src="WEB-INF/headerwithback.xhtml"/>
+    <f:metadata>
+        <f:viewParam name="id" value="#{productForListCDI.idList}"/>
+    </f:metadata>
+    <h:form>
+        <tr><td>Количество (кг)</td><td><h:inputText value="#{productForListCDI.tonnage}"/></td></tr>
+        <tr>
+            <td>Продукта</td>
+            <td><h:selectOneMenu id="productforlistID" value="#{productForListCDI.idProduct}">
+                <c:forEach items="#{productsCDI.products}" var="p">
+                    <f:selectItem id="id" itemLabel="#{p.title}" itemValue="#{p.id}"/>
+                </c:forEach>
+            </h:selectOneMenu></td></tr>
+        <tr><td><h:commandButton value="Добавить" action="#{productForListCDI.addProductForList()}"/></td></tr>
+    </h:form>
+</f:view>
+<h:body>
+    <h:dataTable value="#{productForListCDI.productForList}" var="product">
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Продукт" />
+            </f:facet>
+            <h:outputText value="#{product.title}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Тип продукта" />
+            </f:facet>
+            <h:outputText value="#{product.type}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="количество (кг)" />
+            </f:facet>
+            <h:outputText value="#{product.count}" />
+        </h:column>
+        <h:column>
+            <h:form>
+                <h:commandButton value="Удалить" action="#{productForListCDI.deleteProductForList(product.id)}"/>
+            </h:form>
+        </h:column>
+    </h:dataTable>
+    Суммарный вес: <h:outputText value="#{productForListCDI.sumTon}"/>
+</h:body>
+</html>

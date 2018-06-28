@@ -6,14 +6,18 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
-    <h:form>
-        Вы вошли как <h:outputLabel value="#{userCDI.login}"/>
-        <h:commandButton value="Выйти" action="#{userCDI.exit()}"/>
-    </h:form>
+    <ui:include src="WEB-INF/header.xhtml"/>
 </f:view>
 <h:body>
     <h:form>
-        <h:commandLink value="Список пользователей" action="#{userCDI.goUsers()}" />
+        <ul>
+            <li>
+                <h:commandLink value="Список пользователей" action="#{userCDI.redirect('/users')}" />
+            </li>
+            <li>
+                <h:commandLink value="Далее" action="#{userCDI.redirect('/secondpage')}" />
+            </li>
+        </ul>
     </h:form>
 
 </h:body>

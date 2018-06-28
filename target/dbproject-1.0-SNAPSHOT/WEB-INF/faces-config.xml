@@ -3,4 +3,13 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
               version="2.0">
 
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <description>failure</description>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/errorlogin.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
 </faces-config>

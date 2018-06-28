@@ -6,10 +6,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
+    <ui:include src="WEB-INF/headerwithback.xhtml"/>
     <h:form>
-        Вы вошли как <h:outputLabel value="#{userCDI.login}"/>
-        <h:commandButton value="Выйти" action="#{userCDI.exit()}"/>
-        <h:commandButton value="Назад" action="index"/>
         <h:commandButton value="Обнавить список" action="#{userCDI.updateUsersList()}"/>
     </h:form>
 </f:view>
