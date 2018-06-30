@@ -2,14 +2,17 @@ control\UsersBean.class
 view\UsersServlet.class
 control\TransportBean.class
 domain\ListProducts.class
+control\HistoryBean.class
 view\IndexServlet.class
 view\SecondPageServlet.class
 domain\Product.class
+view\HistoryCDI.class
 view\ProductForListCDI.class
 control\JDBCUtil.class
 domain\ProductType.class
 control\EntryBean.class
 domain\UserType.class
+domain\HistoryEntity.class
 domain\Transport.class
 control\ListProductsBean.class
 view\TransportCDI.class
@@ -20,3 +23,4 @@ view\ListProductsCDI.class
 domain\User.class
 view\LoginServlet.class
 view\UserCDI.class
+domain\TypeOfTransaction.class

@@ -9,19 +9,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Stateless
 public class ProductForListBean {
-    private ArrayList<Product> products;
+    private static ArrayList<Product> products;
 
-    public ArrayList<Product> getProducts() {
+    public static ArrayList<Product> getProducts() {
         return products;
     }
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
+    public static void setProducts(ArrayList<Product> products) {
+        ProductForListBean.products = products;
     }
 
-    public boolean updateProductsByIDList(int id){
+    public static boolean updateProductsByIDList(int id){
         products = new ArrayList<>();
         try(Connection con = JDBCUtil.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * from product_for_list where id_list = ?;");
@@ -47,7 +48,7 @@ public class ProductForListBean {
         return true;
     }
 
-    public boolean addProductForList(int idList, int idProduct, int tonnage){
+    public static boolean addProductForList(int idList, int idProduct, int tonnage){
         try(Connection con = JDBCUtil.getConnection()) {
             int idInList = checkList(idProduct);
             PreparedStatement ps;
@@ -70,7 +71,7 @@ public class ProductForListBean {
         }
         return true;
     }
-    private int checkList(int id){
+    private static int checkList(int id){
         for (int i = 0; i < products.size(); i++) {
             if(products.get(i).getId()==id){
                 return i;
@@ -78,7 +79,7 @@ public class ProductForListBean {
         }
         return -1;
     }
-    public boolean deleteProductForList(int idProduct, int idList){
+    public static boolean deleteProductForList(int idProduct, int idList){
         try (Connection con = JDBCUtil.getConnection()){
             PreparedStatement ps = con.prepareStatement("DELETE from product_for_list where id_product = ? and id_list = ?;");
             ps.setInt(1,idProduct);
@@ -89,11 +90,12 @@ public class ProductForListBean {
         }
         return true;
     }
-    public int getSumTon(){
+    public static int getSumTon(){
         int sumTon = 0;
         for (Product p : products) {
             sumTon+=p.getCount();
         }
         return sumTon;
     }
+
 }

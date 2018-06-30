@@ -45,4 +45,13 @@ public class ProductsCDI implements Serializable {
         } else UserCDI.redirect("/addproduct.jsf");
     }
 
+    public void sortById(){
+        ProductsBean.sortById();
+        UserCDI.redirect("/storage.jsf");
+    }
+
+    public void sortByTonnage(){
+        ProductsBean.sortByTonnage();
+        UserCDI.redirect("/storage.jsf");
+    }
 }

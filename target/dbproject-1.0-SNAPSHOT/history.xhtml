@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<f:view>
+    <ui:include src="WEB-INF/headerwithback.xhtml"/>
+    <h:form>
+        <tr>
+            <td>Список </td>
+            <td><h:selectOneMenu id="listID" value="#{historyCDI.idList}">
+                <c:forEach items="#{listProductsCDI.listProducts}" var="l">
+                    <f:selectItem id="id" itemLabel="#{l.title}" itemValue="#{l.id}"/>
+                </c:forEach>
+            </h:selectOneMenu></td></tr>
+        <tr>
+            <td>Список </td>
+            <td><h:selectOneMenu id="transportID" value="#{historyCDI.idTransport}">
+                <c:forEach items="#{transportCDI.transports}" var="t">
+                    <f:selectItem id="idt" itemLabel="#{t.nummber}" itemValue="#{t.id}"/>
+                </c:forEach>
+            </h:selectOneMenu></td></tr>
+        <tr><td><h:commandButton value="add" action="#{historyCDI.addHistory()}"/></td></tr>
+        <tr><td><h:commandButton value="remove" action="#{historyCDI.removeHistory()}"/></td></tr>
+    </h:form>
+</f:view>
+<h:body>
+    <h:dataTable value="#{historyCDI.history}" var="h">
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Id" />
+            </f:facet>
+            <h:outputText value="#{h.id}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Список" />
+            </f:facet>
+            <h:outputText value="#{h.getList(h.idList).title}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="User" />
+            </f:facet>
+            <h:outputText value="#{h.getUser(h.idUser).login}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Транспорт" />
+            </f:facet>
+            <h:outputText value="#{h.getTransport(h.idTransport).nummber}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Тип операции" />
+            </f:facet>
+            <h:outputText value="#{h.type}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Время" />
+            </f:facet>
+            <h:outputText value="#{h.date}" />
+        </h:column>
+    </h:dataTable>
+</h:body>
+</html>

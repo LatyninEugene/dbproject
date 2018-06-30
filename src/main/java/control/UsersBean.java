@@ -42,6 +42,12 @@ public class UsersBean {
         }
         return user;
     }
+    public static User getUserById(int id){
+        for (User u : users) {
+            if (u.getId()==id)return u;
+        }
+        return null;
+    }
     public static boolean updateUsersList(){
         users = new ArrayList<>();
         try(Connection con = JDBCUtil.getConnection()) {

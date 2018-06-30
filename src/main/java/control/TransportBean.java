@@ -64,4 +64,11 @@ public class TransportBean {
     public static void sortByTonnage(){
         Collections.sort(transports, (o1, o2)->o1.getTonnage() < o2.getTonnage()? 1:-1);
     }
+
+    public static Transport getTransportById(int id){
+        for (Transport t : transports) {
+            if (t.getId()==id)return t;
+        }
+        return null;
+    }
 }

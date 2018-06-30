@@ -61,4 +61,19 @@ public class ProductsBean {
         }
         return true;
     }
+
+    public static void sortById(){
+        Collections.sort(products,(o1, o2)->o1.getId() < o2.getId()? -1:1);
+    }
+    public static void sortByTonnage(){
+        Collections.sort(products,(o1, o2)->o1.getCount() < o2.getCount()? 1:-1);
+    }
+
+    public static Product getProductByID(int id){
+        for (Product p : products) {
+            if (p.getId() == id)return p;
+        }
+        return null;
+    }
+
 }

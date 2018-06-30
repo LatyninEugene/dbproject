@@ -54,4 +54,11 @@ public class ListProductsBean {
         }
         return true;
     }
+
+    public static ListProducts getListById(int id){
+        for (ListProducts l : listProductsArrayList) {
+            if (l.getId()==id)return l;
+        }
+        return null;
+    }
 }

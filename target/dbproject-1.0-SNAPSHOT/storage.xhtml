@@ -13,6 +13,11 @@
 </f:view>
 
 <h:body>
+    <h:outputText value="отсортировать по "/>
+    <h:form>
+        <h:commandButton value="id" action="#{productsCDI.sortById}" />
+        <h:commandButton value="Весу " action="#{productsCDI.sortByTonnage()}"/>
+    </h:form>
     <h:dataTable value="#{productsCDI.products}" var="product">
         <h:column>
             <f:facet name="header">
@@ -34,7 +39,7 @@
         </h:column>
         <h:column>
             <f:facet name="header">
-                <h:outputText value="количество (кг)" />
+                <h:outputText value="Вес (кг)" />
             </f:facet>
             <h:outputText value="#{product.count}" />
         </h:column>

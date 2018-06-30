@@ -20,13 +20,13 @@ public class UserCDI implements Serializable {
 
     private String login;
     private String password;
-    private User user;
+    private static User user;
 
-    public User getUser() {
+    public static User getUser() {
         return user;
     }
-    public void setUser(User user) {
-        this.user = user;
+    public static void setUser(User user) {
+        UserCDI.user = user;
     }
 
     public String getLogin() {
